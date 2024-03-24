@@ -24,6 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/:timeToSend", function(req, res) {
+  const unixTime = Math.floor(new Date(req.params.timeToSend).getTime() / 1000);
+  const utcTime = new Date(req.params.timeToSend);
+  res.json({unix: unixTime.toString(), utc: utcTime.toUTCString()});
+})
+
 
 
 // Listen on port set in environment variable or default to 3000
