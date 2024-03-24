@@ -27,7 +27,7 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:timeToSend", function(req, res) {
   const unixTime = Math.floor(new Date(req.params.timeToSend).getTime() / 1000);
   const utcTime = new Date(req.params.timeToSend);
-  res.json({unix: unixTime.toString(), utc: utcTime.toUTCString()});
+  res.json({unix: unixTime, utc: utcTime.toUTCString()});
 })
 
 
