@@ -24,6 +24,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// timestamp microservice endpoint
 app.get("/api/:date?", function(req, res) {
   function createDate(dateStr) {
     if (!isNaN(new Date(dateStr))) {
@@ -33,7 +34,7 @@ app.get("/api/:date?", function(req, res) {
       return new Date(Number(dateStr));
     }
   };
-  const date = createDate(req.params.date);
+  const date = req.params.date ? createDate(req.params.date) : new Date();
   if (date) {
     const unixTime = Math.round(date.getTime());
     res.json({unix: unixTime, utc: date.toUTCString()});
