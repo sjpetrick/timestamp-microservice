@@ -24,11 +24,24 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:timeToSend", function(req, res) {
-  const unixTime = Math.floor(new Date(req.params.timeToSend).getTime() / 1000);
-  const utcTime = new Date(req.params.timeToSend);
-  res.json({unix: unixTime, utc: utcTime.toUTCString()});
-})
+app.get("/api/:date?", function(req, res) {
+  function createDate(dateStr) {
+    if (!isNaN(new Date(dateStr))) {
+      return new Date(dateStr);
+    }
+    else if (!isNaN(new Date(Number(dateStr)))) {
+      return new Date(Number(dateStr));
+    }
+  };
+  const date = createDate(req.params.date);
+  if (date) {
+    const unixTime = Math.round(date.getTime());
+    res.json({unix: unixTime, utc: date.toUTCString()});
+  }
+  else {
+    res.json({error: "Invalid Date"});
+  }
+});
 
 
 
